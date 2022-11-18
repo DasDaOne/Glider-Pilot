@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GliderAnimation : MonoBehaviour
 {
@@ -20,9 +21,15 @@ public class GliderAnimation : MonoBehaviour
     [SerializeField] private Transform rightHandle;
     [Header("Other")] 
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Slider leftSlider;
+    [SerializeField] private Slider rightSlider;
 
     private Quaternion parachuteDefaultRotation;
-    
+
+    private bool animate = true;
+
+    public bool Animate { set => animate = value;}
+
     private void Start()
     {
         parachuteDefaultRotation = parachute.rotation;
@@ -30,8 +37,10 @@ public class GliderAnimation : MonoBehaviour
 
     private void Update()
     {
-        Vector3 leftRopeScale = new Vector3(1, 1, 1 + playerMovement.LeftHandleInput * scaleMultiplier);
-        Vector3 rightRopeScale = new Vector3(1, 1, 1 + playerMovement.RightHandleInput * scaleMultiplier);
+        if(!animate)
+            return;
+        Vector3 leftRopeScale = new Vector3(1, 1, 1 + leftSlider.value * scaleMultiplier);
+        Vector3 rightRopeScale = new Vector3(1, 1, 1 + rightSlider.value * scaleMultiplier);
 
         leftRope.localScale = leftRopeScale;
         rightRope.localScale = rightRopeScale;

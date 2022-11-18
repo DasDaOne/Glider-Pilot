@@ -1,62 +1,78 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float inputSensitivity;
-    [SerializeField] private Rigidbody rb;
-
-    private PlayerInputs playerInputs;
+    [Header("Sliders")] 
+    [SerializeField] private Slider leftSlider;
+    [SerializeField] private Slider rightSlider;
     
-    private float leftHandleInput;
-    private float rightHandleInput;
-
+    [Header("Values")]
+    [SerializeField] private float forwardAcceleration;
+    [SerializeField] private float sidewaysInputAcceleration;
+    [SerializeField] private float counterForce;
+    
+    [Header("Other")]
+    [SerializeField] private Rigidbody rb;
+    
+    private bool canMove = true;
+    
     private Vector3 movementInputs;
-
-    public float LeftHandleInput => leftHandleInput;
-    public float RightHandleInput => rightHandleInput;
     public Vector3 MovementInputs => movementInputs;
-
-    private void Awake()
-    {
-        playerInputs = new PlayerInputs();
-    }
+    public bool CanMove { set => canMove = value; }
 
     private void Update()
     {
+        if(!canMove)
+            return;
         GetInputs();
+        // GetKeyboardInputs();
+    }
+
+    private void GetKeyboardInputs()
+    {
+        float leftRopeInput = 0;
+        float rightRopeInput = 0;
+        if (Input.GetKey(KeyCode.W))
+            leftRopeInput = 1;
+        else if (Input.GetKey(KeyCode.S))
+            leftRopeInput = -1;
+        
+        if (Input.GetKey(KeyCode.I))
+            rightRopeInput = 1;
+        else if (Input.GetKey(KeyCode.K))
+            rightRopeInput = -1;
+        
+        ApplyInputs(leftRopeInput, rightRopeInput);
     }
 
     private void GetInputs()
     {
-        leftHandleInput = Mathf.Lerp(leftHandleInput, playerInputs.Player.LeftHandle.ReadValue<float>(), Time.deltaTime * inputSensitivity);
-        rightHandleInput = Mathf.Lerp(rightHandleInput, playerInputs.Player.RightHandle.ReadValue<float>(), Time.deltaTime * inputSensitivity);
+        ApplyInputs(leftSlider.value, rightSlider.value);
+    }
 
-        movementInputs.x = rightHandleInput - leftHandleInput;
-        movementInputs.z = (rightHandleInput + leftHandleInput) / 2;
+    private void ApplyInputs(float left, float right)
+    {
+        movementInputs.x = right - left;
+        movementInputs.z = (left + right) / 2;
     }
 
     private void FixedUpdate()
     {
+        if(!canMove)
+            return;
         ApplyMovementForces();
     }
 
     private void ApplyMovementForces()
     {
-        rb.AddForce(movementInputs * movementSpeed, ForceMode.Acceleration);
+        TerrainSpeedManager.Instance.Accelerate(movementInputs.z * forwardAcceleration);
+        rb.AddForce(Vector3.right * (movementInputs.x * sidewaysInputAcceleration), ForceMode.Acceleration);
+        rb.AddForce(Vector3.up * counterForce, ForceMode.Acceleration);
     }
 
-    private void OnEnable()
+    public void AddUpwardsAcceleration(float force)
     {
-        playerInputs.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerInputs.Disable();
+        rb.AddForce(Vector3.up * force, ForceMode.Acceleration);
     }
 }
