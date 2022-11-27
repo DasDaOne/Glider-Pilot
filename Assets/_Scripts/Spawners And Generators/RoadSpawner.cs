@@ -1,23 +1,35 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RoadSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] roadPrefabs;
+    [Header("Road")]
+    [SerializeField] private GameObject roadPrefab;
     [SerializeField] private float rangeToSpawnRoad;
+    [Header("Mall")]
+    [SerializeField] private GameObject mallPrefab;
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (transform.position.z < rangeToSpawnRoad)
         {
-            SpawnRoad();
+            if(DistanceCounter.Instance.NeedToSpawnMall)
+                SpawnMall();
+            else
+                SpawnRoad();
         }
     }
 
     private void SpawnRoad()
     {
-        Instantiate(roadPrefabs[Random.Range(0, roadPrefabs.Length)], transform.position, transform.rotation, transform.parent.parent);
+        Instantiate(roadPrefab, transform.position, transform.rotation, transform.parent.parent);
+        Destroy(this);
+    }
+
+    private void SpawnMall()
+    {
+        Instantiate(mallPrefab, transform.position, transform.rotation, transform.parent.parent);
+        DistanceCounter.Instance.OnSpawnMall?.Invoke();
         Destroy(this);
     }
 }

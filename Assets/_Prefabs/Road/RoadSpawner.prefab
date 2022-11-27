@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e46832b27f9c074a8bf25cc3b085351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roadPrefabs:
-  - {fileID: 2470680871970177171, guid: cee0f3cbb89dca547bf1be2c75eb1e6d, type: 3}
+  roadPrefab: {fileID: 2470680871970177171, guid: cee0f3cbb89dca547bf1be2c75eb1e6d, type: 3}
   rangeToSpawnRoad: 240
+  mallPrefab: {fileID: 7767434715690652262, guid: 4d2d0a6b3bc388243a2c04bbf6f9f191, type: 3}
+  minDistToSpawnMall: 100
+  maxDistToSpawnMall: 500

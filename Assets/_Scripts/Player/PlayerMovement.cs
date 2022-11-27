@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovementForces()
     {
-        TerrainSpeedManager.Instance.Accelerate(movementInputs.z * forwardAcceleration);
+        TerrainManager.Instance.Accelerate(movementInputs.z * forwardAcceleration);
         rb.AddForce(Vector3.right * (movementInputs.x * sidewaysInputAcceleration), ForceMode.Acceleration);
         rb.AddForce(Vector3.up * counterForce, ForceMode.Acceleration);
     }

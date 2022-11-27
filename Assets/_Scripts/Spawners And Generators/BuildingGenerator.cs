@@ -6,12 +6,16 @@ using Random = UnityEngine.Random;
 
 public class BuildingGenerator : MonoBehaviour
 {
+    [Header("Prefabs")]
     [SerializeField] private GameObject floor;
     [SerializeField] private GameObject balcony;
     [SerializeField] private GameObject roof;
+    [Header("SpawnPoint")]
     [SerializeField] private Transform spawnPoint;
+    [Header("Range of random floor amount")]
     [SerializeField] private int minFloorAmount;
     [SerializeField] private int maxFloorAmount;
+    [Header("Values")]
     [SerializeField] private float floorHeight = 7.7f;
     [SerializeField, Range(0, 100)] private float chanceOfSpawningBalcony;
     
