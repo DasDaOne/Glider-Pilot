@@ -7,7 +7,6 @@ using Utilities;
 
 public class CoinManager : Singleton<CoinManager>
 {
-    private const string MoneyCounterText = "<sprite name=\"Coin\"> ";
     private const string MoneyPrefsKey = "Money";
     
     [SerializeField] private TextMeshProUGUI moneyCounter;
@@ -48,6 +47,6 @@ public class CoinManager : Singleton<CoinManager>
 
     private void UpdateMoneyCounter()
     {
-        moneyCounter.text = MoneyCounterText + money;
+        moneyCounter.text =  money.ToString();
     }
 }

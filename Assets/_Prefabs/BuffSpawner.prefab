@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffPrefabs:
-  - {fileID: 564788327652705942, guid: 7ae08b570e701a1478aa81590022224a, type: 3}
+  - {fileID: 1808798114091043937, guid: 02d0db97832ef24478ddcced932a2d2c, type: 3}
   - {fileID: 7079054485216968355, guid: 1c3cfd7079a855e44958ad04d0a73882, type: 3}
   chanceToSpawnBuff: 50

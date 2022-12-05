@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,7 +9,7 @@ public class BuffSpawner : MonoBehaviour
     private void Start()
     {
         if (Random.Range(0, 100) < chanceToSpawnBuff)
-            Instantiate(buffPrefabs[Random.Range(0, buffPrefabs.Length)], transform.position, quaternion.identity, transform.parent);
+            Instantiate(buffPrefabs[Random.Range(0, buffPrefabs.Length)], transform.position, Quaternion.identity, transform.parent);
         Destroy(this);
     }
 }
