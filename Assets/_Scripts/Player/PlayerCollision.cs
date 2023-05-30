@@ -11,7 +11,6 @@ public class PlayerCollision : MonoBehaviour
  
     [Header("Components")]
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private GliderEngine gliderEngine;
     [SerializeField] private GliderAnimation gliderAnimation;
     [SerializeField] private Rigidbody rb;
 
@@ -19,7 +18,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void Death()
     {
-        playerMovement.CanMove = false;
+        playerMovement.Death();
         gliderAnimation.Animate = false;
         EventManager.Instance.deathEvent.Invoke();
                 
@@ -56,7 +55,7 @@ public class PlayerCollision : MonoBehaviour
         switch (other.tag)
         {
             case "FuelBuff":
-                gliderEngine.AddFuel();
+                playerMovement.AddFuel();
                 Destroy(other.gameObject);
                 break;
             case "Coin":
